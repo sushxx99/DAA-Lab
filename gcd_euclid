@@ -1,0 +1,17 @@
+#include <stdio.h> 
+int main() 
+{
+    int m, n;
+    scanf("%d%d", &n, &m);
+    if (n < 0) n = -n;
+    if (m < 0) m = -m;
+    while(n != 0) 
+    {   
+        int temp = n;
+        n = m % n; 
+        m = temp;
+    }
+    if(m != 0)
+        printf("The gcd is %d\n", m);
+    return 0; 
+}

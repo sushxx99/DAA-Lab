@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_NODES 100 // Adjust this based on your requirements
+
+void dfs(int node, int adjacency_matrix[MAX_NODES][MAX_NODES], bool visited[MAX_NODES], int component[MAX_NODES], int *component_size) {
+    visited[node] = true;
+    component[(*component_size)++] = node;
+    
+    for (int neighbor = 0; neighbor < MAX_NODES; ++neighbor) {
+        if (adjacency_matrix[node][neighbor] == 1 && !visited[neighbor]) {
+            dfs(neighbor, adjacency_matrix, visited, component, component_size);
+        }
+    }
+}
+
+void find_connected_components(int adjacency_matrix[MAX_NODES][MAX_NODES], int num_nodes) {
+    bool visited[MAX_NODES] = { false };
+    
+    for (int node = 0; node < num_nodes; ++node) {
+        if (!visited[node]) {
+            int component[MAX_NODES];
+            int component_size = 0;
+            dfs(node, adjacency_matrix, visited, component, &component_size);
+            
+            printf("Connected Component:");
+            for (int i = 0; i < component_size; ++i) {
+                printf(" %d", component[i]);
+            }
+            printf("\n");
+        }
+    }
+}
+
+int main() {
+    int num_nodes;
+    printf("Enter the number of nodes in the network: ");
+    scanf("%d", &num_nodes);
+    
+    int adjacency_matrix[MAX_NODES][MAX_NODES];
+    printf("Enter the adjacency matrix:\n");
+    for (int i = 0; i < num_nodes; ++i) {
+        for (int j = 0; j < num_nodes; ++j) {
+            scanf("%d", &adjacency_matrix[i][j]);
+        }
+    }
+    
+    find_connected_components(adjacency_matrix, num_nodes);
+    
+    return 0;
+}

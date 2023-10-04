@@ -1,28 +1,16 @@
-#include <stdio.h>
-
-int main() {
+#include<stdio.h>
+int main(){
    int z[2][2];
    int i, j;
    int m1, m2, m3, m4 , m5, m6, m7;
-   int x[2][2];
-   int y[2][2];
-
-   // Input for the first matrix x
-   printf("Enter the elements of the first matrix (2x2):\n");
-   for(i = 0; i < 2; i++) {
-      for(j = 0; j < 2; j++) {
-         scanf("%d", &x[i][j]);
-      }
-   }
-
-   // Input for the second matrix y
-   printf("Enter the elements of the second matrix (2x2):\n");
-   for(i = 0; i < 2; i++) {
-      for(j = 0; j < 2; j++) {
-         scanf("%d", &y[i][j]);
-      }
-   }
-
+   int x[2][2] = {
+       {12, 34}, 
+       {22, 10}
+       };
+   int y[2][2] = {
+       {3, 4}, 
+       {2, 1}
+   };
    printf("\nThe first matrix is\n");
    for(i = 0; i < 2; i++) {
       printf("\n");
@@ -54,3 +42,11 @@ int main() {
    }
    return 0;
 }
+
+ALGORITHM:
+Algorithm: Matrix-Multiplication (X, Y, Z) 
+for i = 1 to p do 
+   for j = 1 to r do 
+      Z[i,j] := 0 
+      for k = 1 to q do 
+         Z[i,j] := Z[i,j] + X[i,k] × Y[k,j] 

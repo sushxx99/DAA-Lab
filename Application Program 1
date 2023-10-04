@@ -1,5 +1,5 @@
 //APPLICATION PROGRAM 1
-//An attendance register is commonly used to keep track of students'
+An attendance register is commonly used to keep track of students'
 presence in a class or an event. Sorting the names in the attendance
 register alphabetically is essential for easy access and analysis. The
 task is to develop a program that takes a list of names in an

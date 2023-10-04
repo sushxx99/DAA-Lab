@@ -1,3 +1,12 @@
+//APPLICATION PROGRAM 1
+//An attendance register is commonly used to keep track of students'
+presence in a class or an event. Sorting the names in the attendance
+register alphabetically is essential for easy access and analysis. The
+task is to develop a program that takes a list of names in an
+attendance register as input and sorts them alphabetically using the
+quick sort algorithm. The program should read the names from a file
+or accept user input, sort them, and display the sorted list of names.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -35,7 +44,7 @@ int main() {
     printf("Enter the number of names: ");
     scanf("%d", &num_names);
 
-    char** names = (char**)malloc(num_names * sizeof(char*));
+    char** names = (char*)malloc(num_names * sizeof(char));
     for (int i = 0; i < num_names; i++) {
         names[i] = (char*)malloc(100 * sizeof(char));
         printf("Enter name %d: ", i + 1);

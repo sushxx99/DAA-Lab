@@ -1,74 +1,86 @@
+//APPLICATION PROGRAM 4
+In a transportation network, there are multiple cities connected by 
+roads with various distances between them. The task is to find the 
+shortest path from a given source city to all other cities in the 
+network. This information is crucial for effective transportation 
+planning and route optimization. Implement the Bellman-Ford 
+algorithm in C language to solve the transportation planning problem
+to determine the shortest paths and distances from the source city to 
+all other cities in the network.
+
+
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include <limits.h>
 
-#define MAX_CITIES 100
-#define INF INT_MAX
+// Structure to represent a road (edge) in the network
+struct Road {
+    int source;
+    int destination;
+    int distance;
+};
 
-void bellmanFord(int num_cities, int source, int adjMatrix[MAX_CITIES][MAX_CITIES], int distances[MAX_CITIES]) {
-    // Initialize distances
-    for (int i = 0; i < num_cities; ++i) {
-        distances[i] = INF;
+// Function to perform the Bellman-Ford algorithm
+void bellmanFord(struct Road roads[], int numCities, int numRoads, int source) {
+    int distances[numCities];
+
+    // Initialize distances to a maximum value
+    for (int i = 0; i < numCities; ++i) {
+        distances[i] = INT_MAX;
     }
-    distances[source] = 0;
+
+    distances[source] = 0; // Distance from source to itself is 0
 
     // Relax edges repeatedly
-    for (int iter = 1; iter <= num_cities - 1; ++iter) {
-        for (int u = 0; u < num_cities; ++u) {
-            for (int v = 0; v < num_cities; ++v) {
-                int weight = adjMatrix[u][v];
-                if (weight != -1 && distances[u] != INF && distances[u] + weight < distances[v]) {
-                    distances[v] = distances[u] + weight;
-                }
+    for (int i = 0; i < numCities - 1; ++i) {
+        for (int j = 0; j < numRoads; ++j) {
+            int u = roads[j].source;
+            int v = roads[j].destination;
+            int weight = roads[j].distance;
+
+            if (distances[u] != INT_MAX && distances[u] + weight < distances[v]) {
+                distances[v] = distances[u] + weight;
             }
         }
+    }
+
+    // Check for negative weight cycles
+    for (int i = 0; i < numRoads; ++i) {
+        int u = roads[i].source;
+        int v = roads[i].destination;
+        int weight = roads[i].distance;
+
+        if (distances[u] != INT_MAX && distances[u] + weight < distances[v]) {
+            printf("Negative weight cycle detected. The graph contains negative cycles.\n");
+            return;
+        }
+    }
+
+    // Print shortest distances
+    printf("Shortest distances from source city %d:\n", source);
+    for (int i = 0; i < numCities; ++i) {
+        printf("City %d: %d\n", i, distances[i]);
     }
 }
 
 int main() {
-    int num_cities, source;
+    int numCities, numRoads, source;
     printf("Enter the number of cities: ");
-    scanf("%d", &num_cities);
+    scanf("%d", &numCities);
+    printf("Enter the number of roads: ");
+    scanf("%d", &numRoads);
 
-    int adjMatrix[MAX_CITIES][MAX_CITIES];
-    printf("Enter the adjacency matrix (use -1 for no connection):\n");
-    for (int i = 0; i < num_cities; ++i) {
-        for (int j = 0; j < num_cities; ++j) {
-            scanf("%d", &adjMatrix[i][j]);
-        }
+    struct Road roads[numRoads];
+    for (int i = 0; i < numRoads; ++i) {
+        printf("Enter details for road %d (source destination distance): ", i + 1);
+        scanf("%d %d %d", &roads[i].source, &roads[i].destination, &roads[i].distance);
     }
 
-    printf("Enter the source city (0 to %d): ", num_cities - 1);
+    printf("Enter the source city: ");
     scanf("%d", &source);
 
-    int distances[MAX_CITIES];
-    bellmanFord(num_cities, source, adjMatrix, distances);
-
-    printf("Shortest distances from city %d to all other cities:\n", source);
-    for (int i = 0; i < num_cities; ++i) {
-        if (distances[i] == INF) {
-            printf("City %d is not reachable from the source\n", i);
-        } else {
-            printf("City %d: %d\n", i, distances[i]);
-        }
-    }
+    bellmanFord(roads, numCities, numRoads, source);
 
     return 0;
 }
-
-
-
-OUTPUT:
-Enter the number of cities: 5
-Enter the adjacency matrix (use -1 for no connection):
-0 -1 -1 3 2
--1 0 -1 4 1
--1 -1 0 6 -1
--1 -1 -1 0 3
--1 -1 -1 -1 0
-Enter the source city (0 to 4): 0
-Shortest distances from city 0 to all other cities:
-City 0: 0
-City 1 is not reachable from the source
-City 2 is not reachable from the source
-City 3: 3
-City 4: 2

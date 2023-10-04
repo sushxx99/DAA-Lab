@@ -1,3 +1,4 @@
+//C program that implements the Depth First Search (DFS) algorithm
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -66,3 +67,16 @@ int main() {
     return 0;
 }
 
+ALGORITHM:
+DFS(G, u)
+    u.visited = true
+    for each v ∈ G.Adj[u]
+        if v.visited == false
+            DFS(G,v)
+     
+init() {
+    For each u ∈ G
+        u.visited = false
+     For each u ∈ G
+       DFS(G, u)
+}

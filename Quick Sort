@@ -1,0 +1,69 @@
+// C Pogram for Quick Sort
+#include <stdio.h>
+
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int partition(int arr[], int s, int e) {
+    int pivot = arr[e];
+    int pIndex = s;
+
+    for (int i = s; i < e; i++) {
+        if (arr[i] <= pivot) {
+            swap(&arr[i], &arr[pIndex]);
+            pIndex++;
+        }
+    }
+    swap(&arr[e], &arr[pIndex]);
+    return pIndex;
+}
+
+void quickSort(int arr[], int s, int e) {
+    if (s < e) {
+        int p = partition(arr, s, e);
+        quickSort(arr, s, p - 1);
+        quickSort(arr, p + 1, e);
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+    printf("Enter %d elements: ", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Original array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    quickSort(arr, 0, n - 1);
+
+    printf("Sorted array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+
+ALGORITHM:
+QUICKSORT (array A, start, end)     
+{  
+ 1 if (start < end)     
+ 2 {  
+3 p = partition(A, start, end)  
+4 QUICKSORT (A, start, p - 1)    
+5 QUICKSORT (A, p + 1, end)    
+6 }   
+}  

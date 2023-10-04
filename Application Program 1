@@ -44,11 +44,11 @@ int main() {
     printf("Enter the number of names: ");
     scanf("%d", &num_names);
 
-    char** names = (char*)malloc(num_names * sizeof(char));
+    char** names = (char**)malloc(num_names * sizeof(char*));
     for (int i = 0; i < num_names; i++) {
-        names[i] = (char*)malloc(100 * sizeof(char));
+        names[i] = (char*)malloc(101 * sizeof(char)); // Allow for names up to 100 characters + null terminator
         printf("Enter name %d: ", i + 1);
-        scanf("%s", names[i]);
+        scanf(" %100[^\n]", names[i]); // Read a whole line including spaces
     }
 
     quickSort(names, 0, num_names - 1);

@@ -17,8 +17,8 @@ void merge(char** arr, int left, int mid, int right) {
     int n2 = right - mid;
     
     // Create temporary arrays
-    char** L = (char*)malloc(n1 * sizeof(char));
-    char** R = (char*)malloc(n2 * sizeof(char));
+    char** L = (char**)malloc(n1 * sizeof(char*));
+    char** R = (char**)malloc(n2 * sizeof(char*));
     
     for (i = 0; i < n1; i++)
         L[i] = arr[left + i];
@@ -91,9 +91,9 @@ int main() {
     }
     fseek(file, 0, SEEK_SET);
     
-    char** mobile_numbers = (char*)malloc(n * sizeof(char));
+    char** mobile_numbers = (char**)malloc(n * sizeof(char*));
     for (int i = 0; i < n; i++) {
-        mobile_numbers[i] = (char*)malloc(20 * sizeof(char)); // Assuming a maximum of 20 characters per number
+        mobile_numbers[i] = (char*)malloc(101 * sizeof(char)); // Allowing for mobile numbers up to 100 characters
         fscanf(file, "%s", mobile_numbers[i]);
     }
     

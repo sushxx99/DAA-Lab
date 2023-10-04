@@ -1,3 +1,10 @@
+A contact list often contains mobile numbers that need to be sorted
+for easy access and management. The task is to develop a program
+that takes a list of mobile numbers in a contact list as input and sorts
+them using the merge sort algorithm. The program should read the
+mobile numbers from a file or accept user input, sort them, and
+display the sorted list of mobile numbers.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,8 +16,8 @@ void merge(char** arr, int left, int mid, int right) {
     int n2 = right - mid;
     
     // Create temporary arrays
-    char** L = (char**)malloc(n1 * sizeof(char*));
-    char** R = (char**)malloc(n2 * sizeof(char*));
+    char** L = (char*)malloc(n1 * sizeof(char));
+    char** R = (char*)malloc(n2 * sizeof(char));
     
     for (i = 0; i < n1; i++)
         L[i] = arr[left + i];
@@ -83,7 +90,7 @@ int main() {
     }
     fseek(file, 0, SEEK_SET);
     
-    char** mobile_numbers = (char**)malloc(n * sizeof(char*));
+    char** mobile_numbers = (char*)malloc(n * sizeof(char));
     for (int i = 0; i < n; i++) {
         mobile_numbers[i] = (char*)malloc(20 * sizeof(char)); // Assuming a maximum of 20 characters per number
         fscanf(file, "%s", mobile_numbers[i]);

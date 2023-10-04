@@ -1,51 +1,71 @@
+Social networks consist of individuals connected through various 
+relationships. Analyzing the connectivity within a social network can 
+provide insights into communities, influence propagation, and 
+information flow. One way to analyze the connectivity is to find the 
+connected components within the network. Given a social network 
+represented as an adjacency matrix, the task is to find the connected 
+components using the Depth-First Search (DFS) algorithm. The 
+program should implement the DFS algorithm to traverse the 
+network, identify the connected components, and display them.
+
 #include <stdio.h>
 #include <stdbool.h>
 
-#define MAX_NODES 100 // Adjust this based on your requirements
+#define MAX_VERTICES 100
 
-void dfs(int node, int adjacency_matrix[MAX_NODES][MAX_NODES], bool visited[MAX_NODES], int component[MAX_NODES], int *component_size) {
-    visited[node] = true;
-    component[(*component_size)++] = node;
-    
-    for (int neighbor = 0; neighbor < MAX_NODES; ++neighbor) {
-        if (adjacency_matrix[node][neighbor] == 1 && !visited[neighbor]) {
-            dfs(neighbor, adjacency_matrix, visited, component, component_size);
+int graph[MAX_VERTICES][MAX_VERTICES];
+int visited[MAX_VERTICES];
+int vertices;
+
+void initGraph() {
+    for (int i = 0; i < MAX_VERTICES; i++) {
+        for (int j = 0; j < MAX_VERTICES; j++) {
+            graph[i][j] = 0;
+        }
+        visited[i] = 0;
+    }
+}
+
+void addEdge(int src, int dest) {
+    graph[src][dest] = 1;
+    graph[dest][src] = 1;
+}
+
+void dfs(int vertex) {
+    visited[vertex] = 1;
+    printf("%d ", vertex);
+
+    for (int i = 0; i < vertices; i++) {
+        if (graph[vertex][i] && !visited[i]) {
+            dfs(i);
         }
     }
 }
 
-void find_connected_components(int adjacency_matrix[MAX_NODES][MAX_NODES], int num_nodes) {
-    bool visited[MAX_NODES] = { false };
-    
-    for (int node = 0; node < num_nodes; ++node) {
-        if (!visited[node]) {
-            int component[MAX_NODES];
-            int component_size = 0;
-            dfs(node, adjacency_matrix, visited, component, &component_size);
-            
-            printf("Connected Component:");
-            for (int i = 0; i < component_size; ++i) {
-                printf(" %d", component[i]);
-            }
+void findConnectedComponents() {
+    for (int i = 0; i < vertices; i++) {
+        if (!visited[i]) {
+            dfs(i);
             printf("\n");
         }
     }
 }
 
 int main() {
-    int num_nodes;
-    printf("Enter the number of nodes in the network: ");
-    scanf("%d", &num_nodes);
-    
-    int adjacency_matrix[MAX_NODES][MAX_NODES];
+    printf("Enter the number of vertices: ");
+    scanf("%d", &vertices);
+
+    initGraph();
+
     printf("Enter the adjacency matrix:\n");
-    for (int i = 0; i < num_nodes; ++i) {
-        for (int j = 0; j < num_nodes; ++j) {
-            scanf("%d", &adjacency_matrix[i][j]);
+    for (int i = 0; i < vertices; i++) {
+        for (int j = 0; j < vertices; j++) {
+            scanf("%d", &graph[i][j]);
         }
     }
-    
-    find_connected_components(adjacency_matrix, num_nodes);
-    
+
+    printf("Connected components:\n");
+    findConnectedComponents();
+
     return 0;
 }
